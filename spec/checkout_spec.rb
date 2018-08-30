@@ -24,4 +24,11 @@ describe Checkout do
     it 'should be able to scan products' do 
         expect(subject.scan('001')).to be_truthy
     end
+
+    it 'should be able to add items to shopping cart by scanning' do
+        subject.scan('001')
+        subject.scan('001')
+        expect(subject.shopping_cart[:"001"]).to eq 2
+    end
+
 end

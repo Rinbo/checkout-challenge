@@ -1,6 +1,6 @@
 class Checkout
 
-    attr_accessor :promotional_rules, :discount_threshold, :discount, :product_discount
+    attr_accessor :promotional_rules, :discount_threshold, :discount, :product_discount, :shopping_cart
 
     def initialize(promotional_rules = {})
         @promotional_rules = promotional_rules
@@ -9,7 +9,7 @@ class Checkout
     end
 
     def scan(item)
-        @shopping_cart.keys.include?(:item) == nil ? @shoppin_cart[:item] = 1 : @shoppint_cart[:item] +=1
+        @shopping_cart[item.to_sym] == nil ? @shopping_cart[item.to_sym] = 1 : @shopping_cart[item.to_sym] += 1
     end
 
     
