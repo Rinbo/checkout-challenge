@@ -1,16 +1,18 @@
+
 class Checkout
 
     attr_accessor :promotional_rules, :discount_threshold, :discount, 
                     :product_discount, :shopping_cart, :inventory
 
     def initialize(promotional_rules = {})
-        @promotional_rules = promotional_rules
-        load_promotional_rules unless promotional_rules.empty?
+        promotional_rules.empty? ? load_default_rules : @promotional_rules = promotional_rules
+        parse_promotional_rules
         @shopping_cart = {}
-        load_inventory        
+        load_inventory              
     end
 
     def scan(item)
+        input_error if item.is_a? Integer
         @shopping_cart[item.to_sym].nil? ? @shopping_cart[item.to_sym] = 1 : @shopping_cart[item.to_sym] += 1
     end
 
@@ -19,6 +21,11 @@ class Checkout
     end
 
     private
+
+    def input_error
+        raise TypeError, "Product code must be passed as a string"
+
+    end
 
     def calculate_price
         total_sum = 0        
@@ -48,7 +55,7 @@ class Checkout
         end        
     end
 
-    def load_promotional_rules
+    def parse_promotional_rules
         @discount_threshold = @promotional_rules[:discount_threshold]
         @discount = @promotional_rules[:discount_value]
         @product_discount = @promotional_rules[:product_discount]
@@ -67,5 +74,12 @@ class Checkout
                         price: 19.95} }
     end
 
-
+    def load_default_rules
+        @promotional_rules = {discount_threshold: 60, 
+            discount_value: 0.1,
+            product_discount: {
+                '001': { 
+                    number_threshold: 2,
+                    discount_price: 8.5 }}}
+    end
 end

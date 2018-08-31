@@ -1,4 +1,5 @@
 require './lib/checkout.rb'
+require 'pry'
 
 describe Checkout do
 
