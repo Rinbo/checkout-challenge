@@ -28,3 +28,9 @@ co.scan(item) #adds that item to the shopping_cart
 co.scan(item) #adds that item to the shopping_cart
 price = co.total #return the total price with discounts deducted
 ~~~
+
+Note that scanning a product will have to be done by using the product code as a string:
+
+~~~
+co.scan('001')
+~~~
